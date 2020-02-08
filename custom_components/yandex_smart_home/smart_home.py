@@ -1,17 +1,16 @@
 """Support for Yandex Smart Home API."""
 import logging
 
-from homeassistant.util.decorator import Registry
-
 from homeassistant.const import (
-    CLOUD_NEVER_EXPOSED_ENTITIES, ATTR_ENTITY_ID)
+    CLOUD_NEVER_EXPOSED_ENTITIES)
+from homeassistant.util.decorator import Registry
 
 from .const import (
     ERR_INTERNAL_ERROR, ERR_DEVICE_UNREACHABLE,
     ERR_DEVICE_NOT_FOUND
 )
-from .helpers import RequestData, YandexEntity
 from .error import SmartHomeError
+from .helpers import RequestData, YandexEntity
 
 HANDLERS = Registry()
 _LOGGER = logging.getLogger(__name__)
@@ -65,7 +64,7 @@ async def _process(hass, data, action, message):
 
 
 @HANDLERS.register('/user/devices')
-async def async_devices_sync(hass, data, message):
+async def async_devices_sync(hass, data):
     """Handle /user/devices request.
 
     https://yandex.ru/dev/dialogs/alice/doc/smart-home/reference/get-devices-docpage/
@@ -204,7 +203,7 @@ async def handle_devices_execute(hass, data, message):
 
 
 @HANDLERS.register('/user/unlink')
-async def async_devices_disconnect(hass, data, message):
+async def async_devices_disconnect():
     """Handle /user/unlink request.
 
     https://yandex.ru/dev/dialogs/alice/doc/smart-home/reference/unlink-docpage/

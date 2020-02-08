@@ -81,7 +81,7 @@ class _Capability:
         """Return the state of this capability for this entity."""
         return {
             'type': self.type,
-            'state':  {
+            'state': {
                 'instance': self.instance,
                 'value': self.get_value()
             }
@@ -113,7 +113,7 @@ class OnOffCapability(_Capability):
     def __init__(self, hass, state, config):
         super().__init__(hass, state, config)
         self.retrievable = state.domain != scene.DOMAIN and state.domain != \
-            script.DOMAIN
+                           script.DOMAIN
 
     @staticmethod
     def supported(domain, features, entity_config):
@@ -130,12 +130,12 @@ class OnOffCapability(_Capability):
             scene.DOMAIN,
             script.DOMAIN,
         ) or (vacuum.DOMAIN
-               and ((features & vacuum.SUPPORT_START
-                     and (features & vacuum.SUPPORT_RETURN_HOME
-                          or features & vacuum.SUPPORT_STOP)
-                     ) or (features & vacuum.SUPPORT_TURN_ON
-                           and features & vacuum.SUPPORT_TURN_OFF
-                           )))
+              and ((features & vacuum.SUPPORT_START
+                    and (features & vacuum.SUPPORT_RETURN_HOME
+                         or features & vacuum.SUPPORT_STOP)
+                    ) or (features & vacuum.SUPPORT_TURN_ON
+                          and features & vacuum.SUPPORT_TURN_OFF
+                          )))
 
     def parameters(self):
         """Return parameters for a devices request."""
@@ -206,7 +206,7 @@ class ToggleCapability(_Capability):
     def supported(domain, features, entity_config):
         """Test if state is supported."""
         return domain == media_player.DOMAIN and features & \
-            media_player.SUPPORT_VOLUME_MUTE
+               media_player.SUPPORT_VOLUME_MUTE
 
     def parameters(self):
         """Return parameters for a devices request."""
@@ -436,7 +436,7 @@ class TemperatureCapability(_RangeCapability):
     def supported(domain, features, entity_config):
         """Test if state is supported."""
         return domain == climate.DOMAIN and features & \
-            climate.const.SUPPORT_TARGET_TEMPERATURE
+               climate.const.SUPPORT_TARGET_TEMPERATURE
 
     def parameters(self):
         """Return parameters for a devices request."""
@@ -527,7 +527,7 @@ class VolumeCapability(_RangeCapability):
     def supported(domain, features, entity_config):
         """Test if state is supported."""
         return domain == media_player.DOMAIN and features & \
-            media_player.SUPPORT_VOLUME_STEP
+               media_player.SUPPORT_VOLUME_STEP
 
     def parameters(self):
         """Return parameters for a devices request."""
@@ -593,16 +593,16 @@ class ChannelCapability(_RangeCapability):
         super().__init__(hass, state, config)
         features = self.state.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
         self.retrievable = features & media_player.SUPPORT_PLAY_MEDIA != 0 and \
-            self.entity_config.get(CONF_CHANNEL_SET_VIA_MEDIA_CONTENT_ID)
+                           self.entity_config.get(CONF_CHANNEL_SET_VIA_MEDIA_CONTENT_ID)
 
     @staticmethod
     def supported(domain, features, entity_config):
         """Test if state is supported."""
         return domain == media_player.DOMAIN and (
                 (features & media_player.SUPPORT_PLAY_MEDIA and
-                    entity_config.get(CONF_CHANNEL_SET_VIA_MEDIA_CONTENT_ID)) or (
-                    features & media_player.SUPPORT_PREVIOUS_TRACK
-                    and features & media_player.SUPPORT_NEXT_TRACK)
+                 entity_config.get(CONF_CHANNEL_SET_VIA_MEDIA_CONTENT_ID)) or (
+                        features & media_player.SUPPORT_PREVIOUS_TRACK
+                        and features & media_player.SUPPORT_NEXT_TRACK)
         )
 
     def parameters(self):

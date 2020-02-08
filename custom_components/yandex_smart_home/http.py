@@ -29,17 +29,18 @@ def async_register_http(hass, cfg):
     hass.http.register_view(YandexSmartHomeView(config))
 
 
+async def head(request: Request) -> Response:
+    """Handle Yandex Smart Home HEAD requests."""
+    _LOGGER.debug("Request: %s (HEAD)" % request.url)
+    return Response(status=200)
+
+
 class YandexSmartHomeUnauthorizedView(HomeAssistantView):
     """Handle Yandex Smart Home unauthorized requests."""
 
     url = '/api/yandex_smart_home/v1.0'
     name = 'api:yandex_smart_home:unauthorized'
     requires_auth = False
-
-    async def head(self, request: Request) -> Response:
-        """Handle Yandex Smart Home HEAD requests."""
-        _LOGGER.debug("Request: %s (HEAD)" % request.url)
-        return Response(status=200)
 
 
 class YandexSmartHomeView(YandexSmartHomeUnauthorizedView):
